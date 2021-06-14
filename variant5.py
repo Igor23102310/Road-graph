@@ -28,7 +28,7 @@ def main():
     G1= CreateGraph(dicNodes,dicEdges)
     #print(G1.nodes())
 
-    #¬ыборка самого большого блока соединенных дорог
+    #Выборка самого большого блока соединенных дорог
     #print('number_connected_components',nx.number_connected_components(G1))
     Gc = max(nx.connected_component_subgraphs(G1), key=len)
     #print(Gc.nodes())
@@ -124,6 +124,28 @@ def ExportNodesToMIF1(a,b,dicNodes,FileName):
  
 
 def ExportNodesToMIF2(a,b,dicNodes,FileName):
+    #Добавляем координаты из словаря узлов
+    arrStr=[]
+    arrStrMID=[]
+    n=len(a)
+    arrStr.append('Pline '+str(n))
+
+    for a1 in a:
+        for key1 in dicNodes.keys():
+            if a1==key1:
+                strData=str(dicNodes[key1][0])+" "+str(dicNodes[key1][1])
+                arrStr.append(strData)
+
+
+    #Запись в файл
+    f = open( FileName, "a" )
+    f.writelines( "%s\n" % item for item in arrStr )
+    f.close()
+    #запись файла MID
+    arrStrMID.append('1,'+str(a[0])+'-'+str(a[n-1])+','+str(b))
+    f = open( FileName[:-3]+"mid", "a" )
+    f.writelines( "%s\n" % item for item in arrStrMID )
+    f.close()
  
 
 #=========================================================================================================
