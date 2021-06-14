@@ -28,7 +28,7 @@ def main():
     G1= CreateGraph(dicNodes,dicEdges)
     #print(G1.nodes())
 
-    #¬ыборка самого большого блока соединенных дорог
+    #Выборка самого большого блока соединенных дорог
     #print('number_connected_components',nx.number_connected_components(G1))
     Gc = max(nx.connected_component_subgraphs(G1), key=len)
     #print(Gc.nodes())
@@ -111,17 +111,59 @@ def CreateGraph(dicNodes,dicEdges):
     #plt.show()
     return G
 
+def CreateGraph(dicNodes,dicEdges):
+    """
+    СОздание графа
+    """
+    G=nx.Graph()
+    for key1 in dicEdges:
+        x1=dicEdges[key1][2][0]
+        y1=dicEdges[key1][2][1]
+        x2=dicEdges[key1][3][0]
+        y2=dicEdges[key1][3][1]
+        dx=x2-x1
+        dy=y2-y1
+        S=(dx**2+dy**2)**(1/2)
+        G.add_edge(dicEdges[key1][0],dicEdges[key1][1],weight=S)
+
+    #вывод данных о графе
+    #print('количество узлов:',G.number_of_nodes())
+    #print('количество ребер:',G.number_of_edges())
+    #nx.draw(G)
+    #plt.show()
+    return G
+
 def ExportGraphNodesToMIF(G1,dicNodes,FileName):
     """
-    Ёкспорт узлов в файл MIF
+    Экспорт узлов в файл MIF
     """
+    arrStr=[]
+    arrStrMID=[]
+    #Добавляем шапку файла
+    arrStr.append("Version   300")
+    arrStr.append('Charset "WindowsCyrillic"')
+    arrStr.append('Delimiter ","')
+    arrStr.append('CoordSys NonEarth Units "m" Bounds (-100000, -100000) (1000000, 1000000)')
+    arrStr.append("Columns 1")
+    arrStr.append("  num Char(10)")
+    arrStr.append("Data")
+    arrStr.append("")
 
+    #Добавляем координаты из словаря узлов
 
-def ExportNodesToMIF1(a,b,dicNodes,FileName):
-    """
-    Ёкспорт узлов в файл MIF
-    """
- 
+    for node1 in G1.nodes():
+        strData="Point "+str(dicNodes[node1][0])+" "+str(dicNodes[node1][1])
+        arrStr.append(strData)
+        arrStrMID.append(str(node1))
+
+    #Запись в файл
+    f = open( FileName, "w" )
+    f.writelines( "%s\n" % item for item in arrStr )
+    f.close()
+    #запись файла MID
+    f = open( FileName[:-3]+"mid", "w" )
+    f.writelines( "%s\n" % item for item in arrStrMID )
+    f.close()
 
 def ExportNodesToMIF2(a,b,dicNodes,FileName):
  
