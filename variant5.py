@@ -30,7 +30,10 @@ def main():
 
     #Выборка самого большого блока соединенных дорог
     #print('number_connected_components',nx.number_connected_components(G1))
-    Gc = max(nx.connected_component_subgraphs(G1), key=len)
+    connected_component_subgraphs = (G1.subgraph(c) for c in nx.connected_components(G1))
+    Gc = max(connected_component_subgraphs, key=len)
+
+    #Gc = max(nx.connected_component_subgraphs(G1), key=len)
     #print(Gc.nodes())
 
     ExportGraphNodesToMIF(Gc,dicNodes,"Cохраненный файл графа дорог/graf.mif")
