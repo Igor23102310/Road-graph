@@ -1,37 +1,101 @@
 #! /usr/bin/env python
 # -*- coding: cp1251 -*-
-"""Ўаблон дл€ созадни€ модулей
-        дл€ Python3"""
+"""Шаблон для созадния модулей
+        для Python3"""
 
 #-------------------------------------------------------------------------------
-# Name:        ¬ведите название модул€
+# Name:        Введите название модуля
 #
 # Author:
 #
 # Created:     15.02.2017
-# Copyright:   (c)  афедра геоинформатики и кадастра ЌЌ√ј—” 2017
+# Copyright:   (c) Кафедра геоинформатики и кадастра ННГАСУ 2017
 #-------------------------------------------------------------------------------
 
-#import os #»мпорт модулей
+#import os #Импорт модулей
 import networkx as nx
 
 def main():
     """
-    ќписание
+    Описание
     переменные
     результаты
     """
-    FileName="»сходные дороги MIF/dor5.MIF"
+    FileName="Исходные дороги MIF/dor5.MIF"
     dicNodes,dicEdges=ReadMIF(FileName)
     #print(dicNodes)
     #print(dicEdges)
     G1= CreateGraph(dicNodes,dicEdges)
     #print(G1.nodes())
 
-    #¬ыборка самого большого блока соединенных дорог
+    #Выборка самого большого блока соединенных дорог
     #print('number_connected_components',nx.number_connected_components(G1))
     Gc = max(nx.connected_component_subgraphs(G1), key=len)
     #print(Gc.nodes())
+
+    ExportGraphNodesToMIF(Gc,dicNodes,"Cохраненный файл графа дорог/graf.mif")
+
+    #поиск кратчайшего пути
+    FileName="Выгруженные маршруты в файле MIF и MID/5routes.mif"
+    print("Маршрут 1")
+    a=[]
+    route=934,1476
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF1(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
+
+    print("Маршрут 2")
+    a=[]
+    route=934,912
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF2(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
+
+    print("Маршрут 3")
+    a=[]
+    route=934,1264
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF2(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
+
+    print("Маршрут 4")
+    a=[]
+    route=934,1307
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF2(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
+
+    print("Маршрут 5")
+    a=[]
+    route=934,115
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF2(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
 
 
 
