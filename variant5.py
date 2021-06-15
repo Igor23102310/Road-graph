@@ -28,12 +28,74 @@ def main():
     G1= CreateGraph(dicNodes,dicEdges)
     #print(G1.nodes())
 
-    #‚ыборка самого большого блока соединенных дорог
+    #Выборка самого большого блока соединенных дорог
     #print('number_connected_components',nx.number_connected_components(G1))
     Gc = max(nx.connected_component_subgraphs(G1), key=len)
     #print(Gc.nodes())
 
- 
+    ExportGraphNodesToMIF(Gc,dicNodes,"Cохраненный файл графа дорог/graf.mif")
+
+    #поиск кратчайшего пути
+    FileName="Выгруженные маршруты в файле MIF и MID/5routes.mif"
+    print("Маршрут 1")
+    a=[]
+    route=934,1476
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF1(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
+
+    print("Маршрут 2")
+    a=[]
+    route=934,912
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF2(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
+
+    print("Маршрут 3")
+    a=[]
+    route=934,1264
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF2(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
+
+    print("Маршрут 4")
+    a=[]
+    route=934,1307
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF2(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
+
+    print("Маршрут 5")
+    a=[]
+    route=934,115
+    if nx.has_path(G1,route[0],route[1]):
+        a=nx.shortest_path(G1,route[0],route[1],weight='weight')
+        b=nx.shortest_path_length(G1,route[0],route[1],weight='weight')
+        print('кратчaйший маршрут ',route[0],'-',route[1],':',a)
+        print('длина маршрута:',b)
+        ExportNodesToMIF2(a,b,dicNodes,FileName)
+    else:
+        print("путь не найден")
 
 
 def ReadMIF(FileName):
@@ -183,11 +245,7 @@ def ExportNodesToMIF1(a,b,dicNodes,FileName):
     f.close()
 
 def ExportNodesToMIF2(a,b,dicNodes,FileName):
-<<<<<<< HEAD
     #Добавляем координаты из словаря узлов
-=======
-    #„обавлЯем координаты из словарЯ узлов
->>>>>>> Denis
     arrStr=[]
     arrStrMID=[]
     n=len(a)
@@ -200,11 +258,7 @@ def ExportNodesToMIF2(a,b,dicNodes,FileName):
                 arrStr.append(strData)
 
 
-<<<<<<< HEAD
     #Запись в файл
-=======
-    #‡апись в файл
->>>>>>> Denis
     f = open( FileName, "a" )
     f.writelines( "%s\n" % item for item in arrStr )
     f.close()
@@ -213,12 +267,8 @@ def ExportNodesToMIF2(a,b,dicNodes,FileName):
     f = open( FileName[:-3]+"mid", "a" )
     f.writelines( "%s\n" % item for item in arrStrMID )
     f.close()
-<<<<<<< HEAD
 
 
-=======
- 
->>>>>>> Denis
 
 #=========================================================================================================
 if __name__ == '__main__':
